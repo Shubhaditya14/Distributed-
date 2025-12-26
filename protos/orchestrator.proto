@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package orchestrator;
+
+service Orchestrator {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc SendHeartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+  rpc CanStartTraining(CanStartTrainingRequest) returns (CanStartTrainingResponse);
+  rpc GetRecoveryInfo(RecoveryRequest) returns (RecoveryResponse);  // Part 3: Recovery Orchestration
+}
+
+message RegisterRequest {
+  string worker_id = 1;
+}
+
+message RegisterResponse {
+  int32 assigned_rank = 1;
+  int32 world_size = 2;
+  bool success = 3;
+  string message = 4;  // Error message if success=false
+}
+
+message HeartbeatRequest {
+  string worker_id = 1;
+  int64 timestamp = 2;
+  int32 current_iteration = 3;
+  float current_loss = 4;
+    bool is_training = 5;
+    int32 checkpointed_iteration = 6;  // NEW: signals "I finished saving iteration X"
+  }
+  
+  message HeartbeatResponse {
+    bool acknowledged = 1;
+    bool should_checkpoint = 2;
+  }
+  
+  message CanStartTrainingRequest {
+    string worker_id = 1;
+  }
+  
+  message CanStartTrainingResponse {
+    bool ready = 1;
+    int32 world_size = 2;
+  }
+  
+  // Part 3: Recovery Orchestration
+  message RecoveryRequest {
+      string worker_id = 1;
+  }
+  
+  message RecoveryResponse {
+      bool in_recovery_mode = 1;
+      int32 checkpoint_iteration = 2;  // Which checkpoint to load
+  }
+  

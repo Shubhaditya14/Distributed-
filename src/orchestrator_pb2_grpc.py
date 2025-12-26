@@ -44,6 +44,16 @@ class OrchestratorStub(object):
                 request_serializer=orchestrator__pb2.HeartbeatRequest.SerializeToString,
                 response_deserializer=orchestrator__pb2.HeartbeatResponse.FromString,
                 _registered_method=True)
+        self.CanStartTraining = channel.unary_unary(
+                '/orchestrator.Orchestrator/CanStartTraining',
+                request_serializer=orchestrator__pb2.CanStartTrainingRequest.SerializeToString,
+                response_deserializer=orchestrator__pb2.CanStartTrainingResponse.FromString,
+                _registered_method=True)
+        self.GetRecoveryInfo = channel.unary_unary(
+                '/orchestrator.Orchestrator/GetRecoveryInfo',
+                request_serializer=orchestrator__pb2.RecoveryRequest.SerializeToString,
+                response_deserializer=orchestrator__pb2.RecoveryResponse.FromString,
+                _registered_method=True)
 
 
 class OrchestratorServicer(object):
@@ -61,6 +71,19 @@ class OrchestratorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def CanStartTraining(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetRecoveryInfo(self, request, context):
+        """Part 3: Recovery Orchestration
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_OrchestratorServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -73,6 +96,16 @@ def add_OrchestratorServicer_to_server(servicer, server):
                     servicer.SendHeartbeat,
                     request_deserializer=orchestrator__pb2.HeartbeatRequest.FromString,
                     response_serializer=orchestrator__pb2.HeartbeatResponse.SerializeToString,
+            ),
+            'CanStartTraining': grpc.unary_unary_rpc_method_handler(
+                    servicer.CanStartTraining,
+                    request_deserializer=orchestrator__pb2.CanStartTrainingRequest.FromString,
+                    response_serializer=orchestrator__pb2.CanStartTrainingResponse.SerializeToString,
+            ),
+            'GetRecoveryInfo': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetRecoveryInfo,
+                    request_deserializer=orchestrator__pb2.RecoveryRequest.FromString,
+                    response_serializer=orchestrator__pb2.RecoveryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -129,6 +162,60 @@ class Orchestrator(object):
             '/orchestrator.Orchestrator/SendHeartbeat',
             orchestrator__pb2.HeartbeatRequest.SerializeToString,
             orchestrator__pb2.HeartbeatResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CanStartTraining(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orchestrator.Orchestrator/CanStartTraining',
+            orchestrator__pb2.CanStartTrainingRequest.SerializeToString,
+            orchestrator__pb2.CanStartTrainingResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetRecoveryInfo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/orchestrator.Orchestrator/GetRecoveryInfo',
+            orchestrator__pb2.RecoveryRequest.SerializeToString,
+            orchestrator__pb2.RecoveryResponse.FromString,
             options,
             channel_credentials,
             insecure,

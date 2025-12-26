@@ -1,7 +1,21 @@
 {
   "permissions": {
     "allow": [
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(python3 -m grpc_tools.protoc:*)",
+      "Bash(pip3 install:*)",
+      "Bash(source:*)",
+      "Bash(conda activate:*)",
+      "Bash(python -m grpc_tools.protoc:*)",
+      "Bash(conda info:*)",
+      "Bash(python3:*)",
+      "Bash(pip install:*)",
+      "Bash(python generate_visualizations.py:*)",
+      "Bash(./scripts/run.sh:*)",
+      "Bash(.venv/bin/python:*)",
+      "Bash(brew list:*)",
+      "Bash(pip3 show:*)",
+      "Bash(pip show:*)"
     ]
   }
 }
